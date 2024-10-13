@@ -1,24 +1,26 @@
-# This is a TOML document
+[[features]]
+  title = "Kidical Mass Matosinhos"
+  sub_title = "Partida do percurso 1"
+  location_name = "Igreja de São Mamede de Infesta"
+  date = "22 de outubro"
+  time = "15h"
+  latitude = -8.6099548
+  longitude = 41.1927351
 
-title = "TOML Example"
+[[features]]
+  title = "Kidical Mass Matosinhos"
+  sub_title = "Partida do percurso 2"
+  location_name = "Escola EB Eng. Fernando Pinto de Oliveira"
+  date = "22 de outubro"
+  time = "15:30h"
+  latitude = -8.7061225
+  longitude = 41.1982749
 
-[owner]
-name = "Tom Preston-Werner"
-dob = 1979-05-27T07:32:00-08:00
-
-[database]
-enabled = true
-ports = [ 8000, 8001, 8002 ]
-data = [ ["delta", "phi"], [3.14] ]
-temp_targets = { cpu = 79.5, case = 72.0 }
-
-[servers]
-
-[servers.alpha]
-ip = "10.0.0.1"
-role = "frontend"
-
-[servers.beta]
-ip = "10.0.0.2"
-role = "backend"
-
+ [[features]]
+  title = "Kidical Mass Matosinhos"
+  sub_title = "Encontro e percurso conjunto"
+  location_name = "Jardim Basílio Teles"
+  date = "22 de outubro"
+  time = "16h"
+  latitude = -8.6873642
+  longitude = 41.1816435
