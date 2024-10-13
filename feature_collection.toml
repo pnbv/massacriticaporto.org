@@ -4,8 +4,8 @@
   location_name = "Igreja de São Mamede de Infesta"
   date = "22 de outubro"
   time = "15h"
-  latitude = 41.1927351
-  longitude = -8.6099548
+  latitude = 41.1935312
+  longitude = -8.6089871
 
 [[features]]
   title = "Kidical Mass Matosinhos"
@@ -13,8 +13,8 @@
   location_name = "Escola EB Eng. Fernando Pinto de Oliveira"
   date = "22 de outubro"
   time = "15:30h"
-  latitude = 41.1982749
-  longitude = -8.7061225
+  latitude = 41.1975853
+  longitude = -8.7037437
 
  [[features]]
   title = "Kidical Mass Matosinhos"
@@ -22,5 +22,5 @@
   location_name = "Jardim Basílio Teles"
   date = "22 de outubro"
   time = "16h"
-  latitude = 41.1816435
-  longitude = -8.6873642
+  latitude = 41.1827398
+  longitude = -8.6864308
