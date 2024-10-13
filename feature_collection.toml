@@ -1,4 +1,13 @@
 [[features]]
+  title = "Massa Crítica Porto"
+  sub_title = "Ponto de encontro (últimas sextas feiras do mês)"
+  location_name = "Praça do Marquês de Pombal"
+  date = "25 de outubro"
+  time = "18:30h"
+  latitude = 41.161448990457615
+  longitude = -8.604779745449218
+  
+[[features]]
   title = "Kidical Mass Matosinhos"
   sub_title = "Partida do percurso 1"
   location_name = "Igreja de São Mamede de Infesta"
