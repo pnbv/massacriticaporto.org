@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MASSA CRÍTICA PORTO</title>
+    <link rel="stylesheet" href="dist/leaflet.css">
+    <script src="dist/leaflet.js"></script>
+    <style>
+      @font-face {
+          font-family: 'Redgar';
+          src:url('fonts/Redgar.ttf.woff') format('woff'),
+              url('fonts/Redgar.ttf.svg#Redgar') format('svg'),
+              url('fonts/Redgar.ttf.eot'),
+              url('fonts/Redgar.ttf.eot?#iefix') format('embedded-opentype'); 
+          font-weight: normal;
+          font-style: normal;
+      }
+      html, body {
+        height:100%;
+        margin: 0;
+        padding: 0;
+        overflow:hidden;
+      }
+      .section-center {        
+        position: absolute;
+        top:0;
+        left: 0;
+        /* height: 25vh; */
+        width:100vw;
+        display:flex;
+        align-items: center;
+        justify-content: center;        
+      }
+      /*h1 { 
+        z-index: 9999;
+        font-family: 'Redgar';
+        font-size: 4rem;
+      }*/
+      @media (min-width:320px)  {
+        h1 { 
+          z-index: 9999;
+          font-family: 'Redgar';
+          font-size: 1.4em;
+        }
+        .section-center a {
+          z-index: 9999;
+          height: 1.4em;
+          margin: 0;
+          padding: 0;
+        }
+        .section-center img {
+          z-index: 9999;
+          width: 1.4em;
+          margin-left: 1em;
+        }        
+      }
+      @media (min-width:801px) {
+        h1 { 
+          z-index: 9999;
+          font-family: 'Redgar';
+          font-size: 4em;
+        }
+        .section-center a {
+          z-index: 9999;
+          height: 2em;
+          margin: 0;
+          padding: 0;
+        }        
+        .section-center img {
+          z-index: 9999;
+          width: 2em;
+          margin-left: 1em;
+        }
+      }
+
+      #map {
+        min-height: 100vh;
+      }
+
+      .popupCustom .leaflet-popup-tip,
+      .popupCustom .leaflet-popup-content-wrapper {
+        background: #121212;
+        /*color: #daffd4;
+        color: #f4f2ab;
+        color: #f6f8b9;*/
+        color: #f9f9c7;
+      }
+    </style>
+  </head>
+  <body>   
+    <section class="section-center" id="section">
+      <h1>MASSA CRÍTICA PORTO</h1>
+      <a href="https://www.facebook.com/groups/123033421052148" target="_blank"><img src="images/Facebook_Logo_Primary.png"/></a>      
+      <a href="https://www.instagram.com/massacriticaporto" target="_blank"><img src="images/Instagram_Glyph_Black.svg"/></a>
+    </section>  
+    <div id="map"></div>
+    <script>
+      // ostv // -8.6219879, 41.1494765
+      // const points = { "type": "FeatureCollection", "features": []};
+      // const points = [
+      //   {
+      //     type: "Feature",
+      //     geometry: { type: "Point", coordinates: [ -8.6219586, 41.1495072 ] },
+      //     properties: {
+      //       speed: -1,
+      //       battery_state: "unplugged",
+      //       motion: [ "stationary" ],
+      //       timestamp: "2024-09-29T10:06:17Z",
+      //       battery_level: 0.3,
+      //       speed_accuracy: -1,
+      //       horizontal_accuracy: 17,
+      //       vertical_accuracy: 99,
+      //       wifi: "NOS-A576",
+      //       course: -1,
+      //       altitude: 91,
+      //       course_accuracy: -1
+      //     }
+      //   },
+      //   {
+      //     type: "Feature",
+      //     geometry: { type: "Point", coordinates: [ -8.6219716, 41.1494803 ] },
+      //     properties: {
+      //       speed: -1,
+      //       battery_state: "unplugged",
+      //       motion: [ "stationary" ],
+      //       timestamp: "2024-09-29T10:06:23Z",
+      //       battery_level: 0.3,
+      //       speed_accuracy: -1,
+      //       horizontal_accuracy: 15,
+      //       vertical_accuracy: 58,
+      //       wifi: "NOS-A576",
+      //       course: -1,
+      //       altitude: 91,
+      //       course_accuracy: -1,
+      //     }
+      //   }
+      // ];
+
+      const geojsonMarkerOptions = {
+        radius: 6,
+        fillColor: "#0078ff",
+        color: "#777",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      }; 
+
+      const customPopupOptions = {
+        // 'maxWidth': 400,
+        // 'width': 200,
+        'className' : 'popupCustom'
+      }
+
+      function github_toml_to_feature_collection(data) {
+        let collection = { "type": "FeatureCollection", "features": []};
+
+        const today_date_UTC = new Date().toISOString();
+        const expire_date = new Date(data.features.expire || "");
+
+        for (const entry of data.features) {          
+          if (today_date_UTC > entry.expire) continue;
+
+          // console.log("ENTRY ---------> ", entry)
+          const lat = entry.latitude;
+          const lon = entry.longitude;
+          
+          let popup_content_blocks = [];
+          popup_content_blocks.push('<b>' + entry.title + '</b><br>');
+          if (entry.sub_title) {
+            popup_content_blocks.push(entry.sub_title + '<br>');
+          }
+          if (entry.location_name) {
+            popup_content_blocks.push(entry.location_name + '<br>');
+          }
+          if (entry.date) {
+            popup_content_blocks.push('<b>' + entry.date);
+            if (entry.time) popup_content_blocks.push(' • ' + entry.time);
+            popup_content_blocks.push('</b><br>');
+          }
+          popup_content_blocks.push('<a target="_blank" href="https://www.google.com/maps/place/' + lat + '%2C' + lon + '">');
+          popup_content_blocks.push('[latitude, longitude]</a>');
+
+          const popup_content = popup_content_blocks.join('');
+
+          collection.features.push({
+            "type": "Feature",
+            "properties": {
+              "title": entry.title,
+              "subTitle": entry.sub_title,
+              "locationName": entry.location_name,
+              "date": entry.date,
+              "time": entry.time,
+              "popupContent": popup_content,
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lon, lat]
+            }
+          });
+        }
+        return collection;
+      }
+
+      function onEachFeature(feature, layer) {      
+        if (feature.properties && feature.properties.popupContent) {
+          const title = (feature.properties.title || 'na').toLowerCase();
+          // layer.bindPopup(feature.properties.popupContent, { autoClose: false });
+          if (title.includes('massa crítica')) {
+            customPopupOptions.autoClose = false;
+            layer.bindPopup(feature.properties.popupContent, customPopupOptions);
+          } else {
+            layer.bindPopup(feature.properties.popupContent, { autoClose: false });
+          }                   
+        }
+      }
+
+      /* MAP SETVIEW WITH READILY AVAILABLE POINTS ALLOWS FOR CENTER DERIVED FROM BOUNDS */
+      // const geojsonLayer = L.geoJSON(points, {
+      //   onEachFeature: onEachFeature,
+      //   pointToLayer: function (feature, latlng) {
+      //     return L.circleMarker(latlng, geojsonMarkerOptions);
+      //   }
+      // });
+      // console.log("GET BOUNDS ----> ",geojsonLayer.getBounds(), geojsonLayer.getBounds().getCenter() );      
+      // let map = L.map('map').setView(geojsonLayer.getBounds().getCenter(), 12, { zoomSnap: 0.1, animation: true });
+
+
+      let map = L.map('map').setView([41.1456266,-8.6150171], 12, { animation: true });
+      
+      fetch("https://overland.nonparnasse.cc/github_features_toml_json").then(async (r) => {
+        const github_toml = await r.json();
+        const feature_collection = github_toml_to_feature_collection(github_toml);
+
+        const geojsonLayer = L.geoJSON(feature_collection, {
+          onEachFeature: onEachFeature,
+          pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
+          }
+        });
+
+        geojsonLayer.addTo(map);
+
+        map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
+
+        geojsonLayer.eachLayer(function(layer){
+          layer.openPopup();
+        });
+
+      }).catch(e => {
+        console.log(e)
+      });
+
+      // map.fitBounds(geojsonLayer.getBounds(), {padding: [100, 100]} );
+      // map.locate({setView: true, maxZoom: 16});
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+    </script>
+  </body>
+</html>
