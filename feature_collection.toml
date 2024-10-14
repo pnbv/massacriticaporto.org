@@ -6,6 +6,7 @@
   time = "15h"
   latitude = 41.1937128497601
   longitude = -8.60787130106337
+  expire = "2024-10-23T00:00:00Z"
 
 [[features]]
   title = "Kidical Mass Matosinhos"
@@ -15,6 +16,7 @@
   time = "15:30h"
   latitude = 41.19777501906762
   longitude = -8.701136616611759
+  expire = "2024-10-23T00:00:00Z"
 
  [[features]]
   title = "Kidical Mass Matosinhos"
@@ -24,6 +26,7 @@
   time = "16h"
   latitude = 41.18292956300676
   longitude = -8.683855903120207
+  expire = "2024-10-23T00:00:00Z"
 
 [[features]]
   title = "Massa Crítica Porto"
