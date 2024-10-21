@@ -1,34 +1,4 @@
 [[features]]
-  title = "Kidical Mass Matosinhos"
-  sub_title = "Partida do percurso 1"
-  location_name = "Igreja de São Mamede de Infesta"
-  date = "22 de outubro"
-  time = "15h"
-  latitude = 41.1937128497601
-  longitude = -8.60787130106337
-  expire = "2024-10-23T00:00:00Z"
-
-[[features]]
-  title = "Kidical Mass Matosinhos"
-  sub_title = "Partida do percurso 2"
-  location_name = "Escola EB Eng. Fernando Pinto de Oliveira"
-  date = "22 de outubro"
-  time = "15:30h"
-  latitude = 41.19777501906762
-  longitude = -8.701136616611759
-  expire = "2024-10-23T00:00:00Z"
-
- [[features]]
-  title = "Kidical Mass Matosinhos"
-  sub_title = "Encontro e percurso conjunto"
-  location_name = "Jardim Basílio Teles"
-  date = "22 de outubro"
-  time = "16h"
-  latitude = 41.18292956300676
-  longitude = -8.683855903120207
-  expire = "2024-10-23T00:00:00Z"
-
-[[features]]
   title = "Massa Crítica Porto"
   sub_title = "Ponto de encontro (últimas sextas do mês)"
   location_name = "Praça do Marquês de Pombal"
