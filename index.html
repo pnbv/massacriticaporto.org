@@ -99,7 +99,6 @@
     </section>  
     <div id="map"></div>
     <script>
-      // ostv // -8.6219879, 41.1494765
       // const points = { "type": "FeatureCollection", "features": []};
       // const points = [
       //   {
@@ -139,6 +138,8 @@
       //     }
       //   }
       // ];
+
+      const DEFAULT_CENTER_COORD = [41.161448990457615, -8.604779745449218];
 
       const geojsonMarkerOptions = {
         radius: 6,
@@ -207,8 +208,10 @@
 
       function onEachFeature(feature, layer) {      
         if (feature.properties && feature.properties.popupContent) {
+          
           const title = (feature.properties.title || 'na').toLowerCase();
           // layer.bindPopup(feature.properties.popupContent, { autoClose: false });
+
           if (title.includes('massa crítica')) {
             customPopupOptions.autoClose = false;
             layer.bindPopup(feature.properties.popupContent, customPopupOptions);
@@ -218,7 +221,7 @@
         }
       }
 
-      /* MAP SETVIEW WITH READILY AVAILABLE POINTS ALLOWS FOR CENTER DERIVED FROM BOUNDS */
+      /* MAP SETVIEW WITH READILY AVAILABLE POINTS ALLOWS FOR BOUNDS DERIVED CENTER */
       // const geojsonLayer = L.geoJSON(points, {
       //   onEachFeature: onEachFeature,
       //   pointToLayer: function (feature, latlng) {
@@ -229,7 +232,7 @@
       // let map = L.map('map').setView(geojsonLayer.getBounds().getCenter(), 12, { zoomSnap: 0.1, animation: true });
 
 
-      let map = L.map('map').setView([41.1456266,-8.6150171], 12, { animation: true });
+      let map = L.map('map').setView(DEFAULT_CENTER_COORD, 12, { animation: true });
       
       fetch("https://overland.nonparnasse.cc/github_features_toml_json").then(async (r) => {
         const github_toml = await r.json();
@@ -244,8 +247,16 @@
 
         geojsonLayer.addTo(map);
 
-        map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
+        if (github_toml.features && github_toml.features.length > 1) {
 
+          map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
+
+        } else if (github_toml.features && github_toml.features.length > 0) {
+          const [lon, lat] = feature_collection.features.pop().geometry.coordinates;
+
+          map.flyTo([lat, lon]);
+        }
+        
         geojsonLayer.eachLayer(function(layer){
           layer.openPopup();
         });
