@@ -288,7 +288,7 @@
 
 
      /* NOVEMBER 25th MC * START */
-      const getData = async function() {
+      const getRouteData = async function() {
         const url = "https://overland.nonparnasse.cc/sample";
         // const url = "http://127.0.0.1:9999/sample";
         try {
@@ -315,17 +315,21 @@
           fillOpacity: 0.8
       };      
 
-      // let map = L.map('map').setView([41.1489079, -8.6143899], 18, { animation: true });
+      // // let map = L.map('map').setView([41.1489079, -8.6143899], 18, { animation: true });
 
-      // map.locate({setView: true, maxZoom: 16});
+      // // map.locate({setView: true, maxZoom: 16});
 
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(map);
+      // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      //   maxZoom: 19,
+      //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      // }).addTo(map);
 
-      getData().then(r => {
-        const geojsonLayer = L.geoJSON(r, {
+      getRouteData().then(res => {
+        const localeOptions = {
+          weekday:'long',year:'numeric',month:'numeric',day:'numeric',
+        };
+
+        const geojsonLayer = L.geoJSON(res, {
           coordsToLatLng: function (coords) {
             return new L.LatLng(coords[1], coords[0], coords[2]);
           },
@@ -334,7 +338,10 @@
           },
           onEachFeature: function (feature, layer) {
             if (feature.properties.timestamp) {
-              layer.bindPopup(feature.properties.timestamp, {}); 
+              const stamp = new Date(feature.properties.timestamp)
+                .toLocaleString('pt-PT', {});
+
+              layer.bindPopup(stamp); 
             }
           }                 
         });
@@ -352,8 +359,8 @@
         }, 150);  
 
         // map.setView([
-        //   r[r.length-1].geometry.coordinates[1],
-        //   r[r.length-1].geometry.coordinates[0]
+        //   res[res.length-1].geometry.coordinates[1],
+        //   res[res.length-1].geometry.coordinates[0]
         // ], 18, {animation: true});
 
       }).catch(e => {
