@@ -285,11 +285,88 @@
       // map.fitBounds(geojsonLayer.getBounds(), {padding: [100, 100]} );
       // map.locate({setView: true, maxZoom: 16});
 
+
+
+     /* NOVEMBER 25th MC * START */
+      const getData = async function() {
+        const url = "https://overland.nonparnasse.cc/sample";
+        // const url = "http://127.0.0.1:9999/sample";
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+          }
+
+          const json = await response.json();
+          console.log(json);
+          return json
+        } catch (error) {
+          console.error(error.message);
+          return {error: error.message}
+        }
+      }
+
+      const geojsonMarkerOptionsRoute = {
+          radius: 2,
+          fillColor: "#0078ff",
+          color: "#777",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+      };      
+
+      // let map = L.map('map').setView([41.1489079, -8.6143899], 18, { animation: true });
+
+      // map.locate({setView: true, maxZoom: 16});
+
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
 
+      getData().then(r => {
+        const geojsonLayer = L.geoJSON(r, {
+          coordsToLatLng: function (coords) {
+            return new L.LatLng(coords[1], coords[0], coords[2]);
+          },
+          pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
+          },
+          onEachFeature: function (feature, layer) {
+            if (feature.properties.timestamp) {
+              layer.bindPopup(feature.properties.timestamp, {}); 
+            }
+          }                 
+        });
+
+        // geojsonLayer.addTo(map);
+        // map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
+        // console.log("GET BOUNDS----->", geojsonLayer.getBounds());
+        setTimeout(()=>{
+          map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
+
+          setTimeout(()=>{
+            geojsonLayer.addTo(map);
+          }, 1000);  
+
+        }, 150);  
+
+        // map.setView([
+        //   r[r.length-1].geometry.coordinates[1],
+        //   r[r.length-1].geometry.coordinates[0]
+        // ], 18, {animation: true});
+
+      }).catch(e => {
+        console.error(e)
+      });
+      /* NOVEMBER 25th MC * END */
+
+
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
     </script>
   </body>
 </html>
