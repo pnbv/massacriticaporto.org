@@ -94,8 +94,12 @@
   <body>   
     <section class="section-center" id="section">
       <h1>MASSA CRÍTICA PORTO</h1>
-      <a href="https://www.facebook.com/groups/123033421052148" target="_blank"><img src="images/Facebook_Logo_Primary.png"/></a>      
-      <a href="https://www.instagram.com/massacriticaporto" target="_blank"><img src="images/Instagram_Glyph_Black.svg"/></a>
+      <a href="https://www.facebook.com/groups/123033421052148" target="_blank">
+        <img src="images/Facebook_Logo_Primary.png"/>
+      </a>      
+      <a href="https://www.instagram.com/massacriticaporto" target="_blank">
+        <img src="images/Instagram_Glyph_Black.svg"/>
+      </a>
     </section>  
     <div id="map"></div>
     <script>
@@ -150,7 +154,7 @@
         fillOpacity: 0.8
       }; 
 
-      const customPopupOptions = {
+      const customPopupOpts = {
         // 'maxWidth': 400,
         // 'width': 200,
         'className' : 'popupCustom'
@@ -182,7 +186,9 @@
             if (entry.time) popup_content_blocks.push(' • ' + entry.time);
             popup_content_blocks.push('</b><br>');
           }
-          popup_content_blocks.push('<a target="_blank" href="https://www.google.com/maps/place/' + lat + '%2C' + lon + '">');
+          popup_content_blocks.push('<a target="_blank" ');
+          popup_content_blocks.push('href="https://www.google.com/maps/place/')
+          popup_content_blocks.push(lat + '%2C' + lon + '">');
           popup_content_blocks.push('[latitude, longitude]</a>');
 
           const popup_content = popup_content_blocks.join('');
@@ -213,23 +219,32 @@
           // layer.bindPopup(feature.properties.popupContent, { autoClose: false });
 
           if (title.includes('massa crítica')) {
-            customPopupOptions.autoClose = false;
-            layer.bindPopup(feature.properties.popupContent, customPopupOptions);
+            customPopupOpts.autoClose = false;
+            layer.bindPopup(feature.properties.popupContent, customPopupOpts);
           } else {
-            layer.bindPopup(feature.properties.popupContent, { autoClose: false });
+            layer.bindPopup(feature.properties.popupContent, { 
+              autoClose: false, 
+              closeOnClick: false 
+            });
           }                   
         }
       }
 
-      /* MAP SETVIEW WITH READILY AVAILABLE POINTS ALLOWS FOR BOUNDS DERIVED CENTER */
+      /* MAP SETVIEW WITH AVAILABLE POINTS ALLOWS FOR BOUNDS DERIVED CENTER */
       // const geojsonLayer = L.geoJSON(points, {
       //   onEachFeature: onEachFeature,
       //   pointToLayer: function (feature, latlng) {
       //     return L.circleMarker(latlng, geojsonMarkerOptions);
       //   }
       // });
-      // console.log("GET BOUNDS ----> ",geojsonLayer.getBounds(), geojsonLayer.getBounds().getCenter() );      
-      // let map = L.map('map').setView(geojsonLayer.getBounds().getCenter(), 12, { zoomSnap: 0.1, animation: true });
+      // console.log("GET BOUNDS -> ",
+      //   geojsonLayer.getBounds(), 
+      //   geojsonLayer.getBounds().getCenter() 
+      // );
+      // let map = L.map('map').setView(geojsonLayer.getBounds().getCenter(), 12, { 
+      //   zoomSnap: 0.1, 
+      //   animation: true 
+      // });
 
 
       let map = L.map('map').setView(DEFAULT_CENTER_COORD, 12, { animation: true });
