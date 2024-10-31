@@ -1,9 +1,9 @@
 [[features]]
   title = "Massa Crítica Porto"
-  sub_title = "Percurso de outubro"
+  sub_title = "Ponto de encontro"
   location_name = "Praça do Marquês de Pombal"
-  #date = "29 de novembro"
-  date = "25 de outubro"
+  date = "29 de novembro"
+  #date = "25 de outubro"
   time = "18:30h"
   latitude = 41.161448990457615
   longitude = -8.604779745449218
