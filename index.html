@@ -324,12 +324,13 @@
       //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       // }).addTo(map);
 
+      /*
       getRouteData().then(res => {
         const localeOptions = {
           weekday:'long',year:'numeric',month:'numeric',day:'numeric',
         };
 
-        /* Extract last feature for "finish line" marker */
+        // Extract last feature for "finish line" marker 
         if (res[0]){
           const [lon, lat] = res[0].geometry.coordinates;
           const finish_marker = L.marker([lat, lon]);
@@ -352,6 +353,7 @@
             }
           }                 
         });
+      */
 
         // geojsonLayer.addTo(map);
         // map.flyToBounds(geojsonLayer.getBounds().pad(0.15));
