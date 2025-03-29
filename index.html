@@ -251,7 +251,7 @@
 
       let map = L.map('map').setView(DEFAULT_CENTER_COORD, 12, { animation: true });
       
-      fetch("https://overland.nonparnasse.cc/github_features_toml_json").then(async (r) => {
+      fetch("https://overland.massacriticaporto.org/github_features_toml_json").then(async (r) => {
         const github_toml = await r.json();
         const feature_collection = github_toml_to_feature_collection(github_toml);
 
@@ -289,7 +289,7 @@
 
      /* NOVEMBER 25th MC * START */
       const getRouteData = async function() {
-        const url = "https://overland.nonparnasse.cc/sample";
+        const url = "https://overland.massacriticaporto.org/sample";
         // const url = "http://127.0.0.1:9999/sample";
         try {
           const response = await fetch(url);
